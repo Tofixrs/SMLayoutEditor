@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Settings>
+    <Resources>
+        <AdditionalResource.List>
+            <Value>ScrapMekTemplate.xml</Value>
+            <Value>ScrapMekSkin.xml</Value>
+            <Value>Rotations.xml</Value>
+            <Value>EditorSkin.xml</Value>
+            <Value>EditorTemplates.xml</Value>
+            <Value>Templates.xml</Value>
+            <Value>SkinLocalized.xml</Value>
+            <Value>Skin.xml</Value>
+            <Value>ContainerSlots.xml</Value>
+            <Value>ButtonsLarge.xml</Value>
+            <Value>BlurrySkin.xml</Value>
+            <Value>BlurryBackgrounds.xml</Value>
+            <Value>BeaconIconMap.xml</Value>
+            <Value>BeaconSkin.xml</Value>
+            <Value>BG.xml</Value>
+            <Value>OutfitUnlock.xml</Value>
+            <Value>VictoryBanner.xml</Value>
+            <Value>Craftbot.xml</Value>
+            <Value>CraftbotQueue.xml</Value>
+            <Value>DressbotSkins.xml</Value>
+            <Value>Inventory.xml</Value>
+            <Value>ItemColorLine.xml</Value>
+            <Value>ItemTypeMap.xml</Value>
+            <Value>KeybindsSkin.xml</Value>
+            <Value>Lift.xml</Value>
+            <Value>Lift_Templates.xml</Value>
+            <Value>IconsLampSpritesheet.xml</Value>
+            <Value>Logbook.xml</Value>
+            <Value>Logbook_Templates.xml</Value>
+            <Value>LogbookItemMap.xml</Value>
+            <Value>WaypointIconMap.xml</Value>
+            <Value>LogicGateDescriptionDots.xml</Value>
+            <Value>LogicGateDescriptionLamps.xml</Value>
+            <Value>LogicGateIcons.xml</Value>
+            <Value>LogicGateSkin.xml</Value>
+            <Value>MainMenu.xml</Value>
+            <Value>PopUp.xml</Value>
+            <Value>QuestpinsSkin.xml</Value>
+            <Value>SeatLevels.xml</Value>
+            <Value>SteerAngles.xml</Value>
+            <Value>SequenceControllerRotation.xml</Value>
+            <Value>ToolTip.xml</Value>
+            <Value>TutorialBgBottom.xml</Value>
+            <Value>TutorialBgMain.xml</Value>
+            <Value>Fonts.xml</Value>
+            <Value>PolygonalSkin.xml</Value>
+        </AdditionalResource.List>
+        <AdditionalPath.List>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/.</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Editor</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Fonts</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/BackgroundImages</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Beacon</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/BG</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/ChallengeMode</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/CharacterCustomization</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Craftbot</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/CreativeMode</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Dressbot</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Hud</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Icons</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Inventory</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Keybinds</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Lift</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/LightController</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Logbook</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Logbook/Photo</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/LogicGate</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/MainMenu</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/PopUp</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Quest</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/QuestMarker</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Seat</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/SequenceController</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/ToolTip</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Resolutions/1920x1080/Tutorial</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/Language/English</Value>
+            <Value>/SteamLibrary/steamlib/steamapps/common/Scrap Mechanic/Data/Gui/ParticleEditorGui</Value>
+        </AdditionalPath.List>
+    </Resources>
+</Settings>
