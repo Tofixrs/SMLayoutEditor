@@ -1,22 +1,38 @@
 {
   "nodes": {
-    "flake-utils": {
+    "flake-parts": {
       "inputs": {
-        "systems": [
-          "systems"
+        "nixpkgs-lib": [
+          "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1710146030,
-        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
+        "lastModified": 1719994518,
+        "narHash": "sha256-pQMhCCHyQGRzdfAkdJ4cIWiw+JNuWsTX7f0ZYSyz0VY=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "9227223f6d922fee3c7b190b2cc238a99527bbb7",
         "type": "github"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "mygui": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1700694696,
+        "narHash": "sha256-qHwlalwdTENQfm4gdaE/1UEZKsgn+cyHUf4ytHOu72U=",
+        "owner": "MyGui",
+        "repo": "mygui",
+        "rev": "17d66baea79b415fec94412d2bb94d847f81696c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MyGui",
+        "repo": "mygui",
         "type": "github"
       }
     },
@@ -38,24 +54,9 @@
     },
     "root": {
       "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
-        "systems": "systems"
-      }
-    },
-    "systems": {
-      "locked": {
-        "lastModified": 1680978846,
-        "narHash": "sha256-Gtqg8b/v49BFDpDetjclCYXm8mAnTrUzR0JnE2nv5aw=",
-        "owner": "nix-systems",
-        "repo": "x86_64-linux",
-        "rev": "2ecfcac5e15790ba6ce360ceccddb15ad16d08a8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "x86_64-linux",
-        "type": "github"
+        "flake-parts": "flake-parts",
+        "mygui": "mygui",
+        "nixpkgs": "nixpkgs"
       }
     }
   },

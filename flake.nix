@@ -1,24 +1,21 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    systems.url = "github:nix-systems/x86_64-linux";
-
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.systems.follows = "systems";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    mygui = {
+      url = "github:MyGui/mygui";
+      flake = false;
     };
   };
-  outputs = inputs @ {flake-utils, ...}:
-    flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = inputs.nixpkgs.legacyPackages.${system};
-      configGen = pkgs.callPackage ./nix/configGen.nix {};
-    in {
-      devShells.default = pkgs.mkShell {
-        name = "shell";
-        inputsFrom = [configGen];
-      };
-      packages = {
-        inherit configGen;
-      };
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} (_: {
+      systems = ["x86_64-linux"];
+      imports = [
+        {config._module.args._inputs = inputs // {inherit (inputs) self;};}
+        ./parts
+      ];
     });
 }
