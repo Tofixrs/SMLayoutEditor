@@ -5,7 +5,7 @@
 }:
 stdenv.mkDerivation rec {
   pname = "SMLayoutEditor-ConfigGen";
-  version = "0.0.1";
+  version = "0.0.2";
   src = ../../.;
   nativeBuildInputs = with pkgs; [cmake pkg-config];
   buildInputs = with pkgs; [tinyxml-2];

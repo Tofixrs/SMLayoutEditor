@@ -6,7 +6,7 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     mygui = {
-      url = "github:MyGui/mygui";
+      url = "github:MyGui/mygui/dae9ac4be5a09e672bec509b1a8552b107c40214";
       flake = false;
     };
   };

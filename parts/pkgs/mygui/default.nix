@@ -22,8 +22,8 @@ in
       "-DMYGUI_INSTALL_TOOLS=TRUE"
     ];
     postInstall = ''
-      mkdir -p "$out/share/SM-GuiEditor/release"
-      cp -r "$src/Media" "$out/share/SM-GuiEditor/Media"
-      cp ${resources} $out/share/SM-GuiEditor/resources.xml
+      mkdir -p "$out/share/MyGuiTools"
+      cp -r "$src/Media" "$out/share/MyGuiTools/"
+      cp ${resources} $out/share/MyGuiTools/resources.xml
     '';
   }

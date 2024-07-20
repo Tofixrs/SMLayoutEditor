@@ -5,7 +5,9 @@ self': {
   ...
 }: let
   script = pkgs.writeShellScript "launcher" ''
-    ln -sf $XDG_DATA_HOME/SM-GuiEditor /tmp/sm-gui-editor
+    mkdir -p /tmp/sm-gui-editor/
+    ln -sf ${self'.packages.mygui}/share/MyGuiTools/resources.xml /tmp/sm-gui-editor/resources.xml
+    ln -sf ${self'.packages.mygui}/share/MyGuiTools/Media /tmp/sm-gui-editor/Media
     cd /tmp/sm-gui-editor
     ${lib.getExe self'.packages.configGen}
     ${self'.packages.mygui}/bin/LayoutEditor

@@ -23,16 +23,17 @@
     "mygui": {
       "flake": false,
       "locked": {
-        "lastModified": 1700694696,
-        "narHash": "sha256-qHwlalwdTENQfm4gdaE/1UEZKsgn+cyHUf4ytHOu72U=",
+        "lastModified": 1691358308,
+        "narHash": "sha256-qif9trHgtWpYiDVXY3cjRsXypjjjgStX8tSWCnXhXlk=",
         "owner": "MyGui",
         "repo": "mygui",
-        "rev": "17d66baea79b415fec94412d2bb94d847f81696c",
+        "rev": "dae9ac4be5a09e672bec509b1a8552b107c40214",
         "type": "github"
       },
       "original": {
         "owner": "MyGui",
         "repo": "mygui",
+        "rev": "dae9ac4be5a09e672bec509b1a8552b107c40214",
         "type": "github"
       }
     },
