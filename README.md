@@ -1,6 +1,6 @@
 # SMLayoutEditor
 
-MyGui layout editor for Scrap Mechanic packaged for Nix
+MyGui layout editor for Scrap Mechanic packaged for the nix package manager
 
 ## cachix
 
