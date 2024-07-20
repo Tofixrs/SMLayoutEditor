@@ -1,4 +1,6 @@
-# SM-Layout-Editor-flake
+# SMLayoutEditor
+
+MyGui layout editor for Scrap Mechanic packaged for Nix
 
 ## cachix
 
