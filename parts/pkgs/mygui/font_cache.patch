@@ -85,13 +85,14 @@ index 2797679..615f7ca 100644
  #endif // MYGUI_PRECOMPILED_H_
 diff --git a/MyGUIEngine/src/FontLoaderCache.cpp b/MyGUIEngine/src/FontLoaderCache.cpp
 new file mode 100644
-index 0000000..5c4d8c5
+index 0000000..0be6655
 --- /dev/null
 +++ b/MyGUIEngine/src/FontLoaderCache.cpp
-@@ -0,0 +1,189 @@
+@@ -0,0 +1,190 @@
 +//#include "C:/dev/mg/mygui/build/MyGUIEngine/CMakeFiles/MyGUIEngine.dir/Release/cmake_pch.hxx"
 +//#include "C:/dev/mg/mygui/build/MyGUIEngine/CMakeFiles/MyGUIEngine.dir/Debug/cmake_pch.hxx"
 +
++#include <cstdlib>
 +#include <filesystem>
 +#include <fstream>
 +#include <vector>
@@ -206,9 +207,9 @@ index 0000000..5c4d8c5
 +
 +	inline static std::string getGlobalLocation()
 +	{
-+        auto current_path = std::filesystem::current_path();
++		std::string path = getenv("XDG_CACHE_HOME");
 +
-+		return current_path.string() + "/font_loader_cache";
++		return path + "/font_loader_cache";
 +	}
 +
 +	void FontLoaderCache::saveToFile()

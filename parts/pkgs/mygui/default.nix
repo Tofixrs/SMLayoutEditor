@@ -23,7 +23,7 @@ in
     ];
 
     patches = [
-      ./font-cache.patch
+      ./font_cache.patch
     ];
 
     postInstall = ''
