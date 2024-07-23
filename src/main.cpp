@@ -1,4 +1,6 @@
 #include "./vdf_parser.hpp"
+#include <cstddef>
+#include <cstdio>
 #include <cstdlib>
 #include <format>
 #include <fstream>
@@ -99,10 +101,11 @@ std::string customRes[52] = {
     "Rotations.xml",
 };
 
-int main() {
-  std::ifstream file("/tmp/sm-gui-editor/le_user_settings.xml");
-  if (file)
-    return 0;
+std::string getSMPath() {
+  auto smPath = getenv("SM_PATH");
+  if (smPath != NULL)
+    return std::format("{}/Data/Gui", smPath);
+
   auto libraryPath = std::format("{}/Steam/steamapps/libraryfolders.vdf",
                                  getenv("XDG_DATA_HOME"));
   std::ifstream libraryFile(libraryPath);
@@ -122,8 +125,22 @@ int main() {
     }
   }
 
+  if (libContainingSm == "") {
+    throw "Failed o find sm lib path";
+  }
+
   std::string smMediaPath = std::format(
       "{}/steamapps/common/Scrap Mechanic/Data/Gui", libContainingSm);
+
+  return smMediaPath;
+}
+
+int main() {
+  std::ifstream file("/tmp/sm-gui-editor/le_user_settings.xml");
+  if (file)
+    return 0;
+
+  auto smMediaPath = getSMPath();
 
   XMLDocument settings;
   XMLDeclaration *declaration = settings.NewDeclaration();

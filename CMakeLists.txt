@@ -5,10 +5,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
 if(CMAKE_BUILD_TYPE MATCHES Debug OR CMAKE_BUILD_TYPE MATCHES DEBUG)
-    message(STATUS "Configuring guessing_game in Debug with CMake")
+	message(STATUS "Configuring SMLayoutEditor-ConfigGen in Debug with CMake")
 else()
     add_compile_options(-O3)
-    message(STATUS "Configuring guessing_game in Release with CMake")
+		message(STATUS "Configuring SMLayoutEditor-ConfigGen in Release with CMake")
 endif()
 
 include_directories(
