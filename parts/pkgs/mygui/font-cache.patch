@@ -1,0 +1,353 @@
+diff --git a/Common/MessageBox/MessageBox.h b/Common/MessageBox/MessageBox.h
+index 61ff805..15155f5 100644
+--- a/Common/MessageBox/MessageBox.h
++++ b/Common/MessageBox/MessageBox.h
+@@ -75,7 +75,7 @@ namespace MyGUI
+ 			}
+ 			// бит, номер кнопки + смещение до Button1
+ 			MessageBoxStyle info = MessageBoxStyle(
+-				MessageBoxStyle::Enum(MYGUI_FLAG(mVectorButton.size() + MessageBoxStyle::_indexUserButton1)));
++				MessageBoxStyle::Enum(MYGUI_FLAG(std::uint8_t(mVectorButton.size() + MessageBoxStyle::_indexUserButton1))));
+ 
+ 			// запоминаем кнопки для отмены и подтверждения
+ 			if (mVectorButton.empty())
+diff --git a/Common/MessageBox/MessageBoxStyle.h b/Common/MessageBox/MessageBoxStyle.h
+index 520d885..c7e287a 100644
+--- a/Common/MessageBox/MessageBoxStyle.h
++++ b/Common/MessageBox/MessageBoxStyle.h
+@@ -145,7 +145,7 @@ namespace MyGUI
+ 			{
+ 				if ((num & 1) == 1)
+ 				{
+-					buttons.emplace_back(MessageBoxStyle::Enum(MYGUI_FLAG(index)));
++					buttons.emplace_back(MessageBoxStyle::Enum(MYGUI_FLAG(std::uint8_t(index))));
+ 				}
+ 
+ 				++index;
+diff --git a/MyGUIEngine/MyGUIEngine.list b/MyGUIEngine/MyGUIEngine.list
+index 35a7b08..9aaee8a 100644
+--- a/MyGUIEngine/MyGUIEngine.list
++++ b/MyGUIEngine/MyGUIEngine.list
+@@ -169,6 +169,7 @@ set (HEADER_FILES
+   include/MyGUI_WidgetUserData.h
+   include/MyGUI_Window.h
+   include/MyGUI_XmlDocument.h
++  include/FontLoaderCache.hpp
+ )
+ set (SOURCE_FILES
+   src/MyGUI_ActionController.cpp
+@@ -268,6 +269,7 @@ set (SOURCE_FILES
+   src/MyGUI_WidgetUserData.cpp
+   src/MyGUI_Window.cpp
+   src/MyGUI_XmlDocument.cpp
++  src/FontLoaderCache.cpp
+ )
+ SOURCE_GROUP("Header Files\\Core\\Common" FILES
+   include/MyGUI.h
+diff --git a/MyGUIEngine/include/FontLoaderCache.hpp b/MyGUIEngine/include/FontLoaderCache.hpp
+new file mode 100644
+index 0000000..65e9699
+--- /dev/null
++++ b/MyGUIEngine/include/FontLoaderCache.hpp
+@@ -0,0 +1,21 @@
++#pragma once
++
++#include <fstream>
++#include <vector>
++#include <string>
++
++#include <unordered_map>
++#include <map>
++
++namespace MyGuiAdditions
++{
++	class MYGUI_EXPORT FontLoaderCache
++	{
++	public:
++		static const std::map<unsigned int, unsigned int>* getGlyphRanges(const std::string& font_name);
++		static void setGlyphRanges(const std::string& font_name, const std::map<unsigned int, unsigned int>& glyph_map);
++		
++		static void saveToFile();
++		static void loadFromFile();
++	};
++}
+\ No newline at end of file
+diff --git a/MyGUIEngine/include/MyGUI_Precompiled.h b/MyGUIEngine/include/MyGUI_Precompiled.h
+index 2797679..615f7ca 100644
+--- a/MyGUIEngine/include/MyGUI_Precompiled.h
++++ b/MyGUIEngine/include/MyGUI_Precompiled.h
+@@ -27,5 +27,6 @@
+ #include "MyGUI_IObject.h"
+ #include "MyGUI_ISerializable.h"
+ #include "MyGUI_GenericFactory.h"
++#include "FontLoaderCache.hpp"
+ 
+ #endif // MYGUI_PRECOMPILED_H_
+diff --git a/MyGUIEngine/src/FontLoaderCache.cpp b/MyGUIEngine/src/FontLoaderCache.cpp
+new file mode 100644
+index 0000000..5c4d8c5
+--- /dev/null
++++ b/MyGUIEngine/src/FontLoaderCache.cpp
+@@ -0,0 +1,189 @@
++//#include "C:/dev/mg/mygui/build/MyGUIEngine/CMakeFiles/MyGUIEngine.dir/Release/cmake_pch.hxx"
++//#include "C:/dev/mg/mygui/build/MyGUIEngine/CMakeFiles/MyGUIEngine.dir/Debug/cmake_pch.hxx"
++
++#include <filesystem>
++#include <fstream>
++#include <vector>
++
++#include <unordered_map>
++#include <map>
++
++
++namespace MyGuiAdditions
++{
++	class FileWriter
++	{
++	public:
++		template<typename T>
++		inline void write(const T& val)
++		{
++			const std::uint8_t* v_begin = reinterpret_cast<const std::uint8_t*>(&val);
++			const std::uint8_t* v_end = v_begin + sizeof(T);
++
++			m_bytes.insert(m_bytes.end(), v_begin, v_end);
++		}
++
++		inline void writeBytes(const void* data, std::size_t data_size)
++		{
++			const std::uint8_t* v_begin = reinterpret_cast<const std::uint8_t*>(data);
++			const std::uint8_t* v_end = v_begin + data_size;
++
++			m_bytes.insert(m_bytes.end(), v_begin, v_end);
++		}
++
++		inline void saveToFile(const std::string& path)
++		{
++			std::ofstream v_file(path, std::ios::binary);
++			if (!v_file.is_open())
++				return;
++
++			v_file.write(reinterpret_cast<const char*>(m_bytes.data()), m_bytes.size());
++			v_file.close();
++		}
++
++	private:
++		std::vector<std::uint8_t> m_bytes;
++	};
++
++	class FileReader
++	{
++	public:
++		FileReader(const std::vector<std::uint8_t>& bytes) :
++			m_begin(bytes.data()),
++			m_end(m_begin + bytes.size()),
++			m_ptr(m_begin) {}
++
++		inline static bool ReadFileToBytes(const std::string& path, std::vector<std::uint8_t>& bytes)
++		{
++			std::ifstream v_input_file(path, std::ios::binary | std::ios::ate);
++			if (!v_input_file.is_open())
++				return false;
++
++			bytes.resize(std::size_t(v_input_file.tellg()));
++			v_input_file.seekg(0, std::ios::beg);
++
++			v_input_file.read(reinterpret_cast<char*>(bytes.data()), bytes.size());
++			v_input_file.close();
++
++			return true;
++		}
++
++		template<typename T>
++		inline bool readRef(T* obj_ptr)
++		{
++			if ((m_ptr + sizeof(T)) >= m_end)
++				return false;
++
++			std::memcpy(obj_ptr, m_ptr, sizeof(T));
++			m_ptr += sizeof(T);
++
++			return true;
++		}
++
++		inline bool readBytes(void* data, std::size_t size)
++		{
++			if ((m_ptr + size) >= m_end)
++				return false;
++
++			std::memcpy(data, m_ptr, size);
++			m_ptr += size;
++
++			return true;
++		}
++
++	private:
++		const std::uint8_t* m_begin;
++		const std::uint8_t* m_end;
++		const std::uint8_t* m_ptr;
++	};
++
++	static std::unordered_map<std::string, std::map<unsigned int, unsigned int>> g_fontGlyphMap;
++
++	const std::map<unsigned int, unsigned int>* FontLoaderCache::getGlyphRanges(const std::string& font_name)
++	{
++		const auto v_iter = g_fontGlyphMap.find(font_name);
++		if (v_iter == g_fontGlyphMap.end())
++			return nullptr;
++
++		return &v_iter->second;
++	}
++
++	void FontLoaderCache::setGlyphRanges(const std::string& font_name, const std::map<unsigned int, unsigned int>& glyph_map)
++	{
++		g_fontGlyphMap[font_name] = glyph_map;
++	}
++
++	inline static std::string getGlobalLocation()
++	{
++        auto current_path = std::filesystem::current_path();
++
++		return current_path.string() + "/font_loader_cache";
++	}
++
++	void FontLoaderCache::saveToFile()
++	{
++		FileWriter v_writer;
++		
++		v_writer.write(std::uint16_t(g_fontGlyphMap.size()));
++
++		for (const auto& v_cur_range : g_fontGlyphMap)
++		{
++			const std::uint16_t v_str_sz = std::uint16_t(v_cur_range.first.size());
++			v_writer.write(v_str_sz);
++			v_writer.writeBytes(v_cur_range.first.c_str(), std::size_t(v_str_sz));
++
++			v_writer.write(std::uint16_t(v_cur_range.second.size()));
++
++			for (const auto& v_cur_glyph : v_cur_range.second)
++			{
++				v_writer.write(v_cur_glyph.first);
++				v_writer.write(v_cur_glyph.second);
++			}
++		}
++
++		v_writer.saveToFile(getGlobalLocation());
++	}
++
++	void FontLoaderCache::loadFromFile()
++	{
++		g_fontGlyphMap.clear();
++
++		std::vector<std::uint8_t> v_bytes;
++		if (!FileReader::ReadFileToBytes(getGlobalLocation(), v_bytes))
++			return;
++
++		FileReader v_reader(v_bytes);
++
++		std::uint16_t v_font_count;
++		if (!v_reader.readRef(&v_font_count))
++			return;
++
++		for (std::uint16_t i = 0; i < v_font_count; i++)
++		{
++			std::uint16_t v_str_sz;
++			if (!v_reader.readRef(&v_str_sz))
++				return;
++
++			std::string v_font_str(std::size_t(v_str_sz), ' ');
++			if (!v_reader.readBytes(v_font_str.data(), v_font_str.size()))
++				return;
++
++			std::uint16_t v_glyph_count;
++			if (!v_reader.readRef(&v_glyph_count))
++				return;
++
++			std::map<unsigned int, unsigned int> v_glyphMap;
++			for (std::uint16_t a = 0; a < v_glyph_count; a++)
++			{
++				std::uint32_t v_char, v_glyph_index;
++
++				if (!v_reader.readRef(&v_char)) return;
++				if (!v_reader.readRef(&v_glyph_index)) return;
++
++				v_glyphMap.emplace(v_char, v_glyph_index);
++			}
++
++			g_fontGlyphMap.emplace(v_font_str, std::move(v_glyphMap));
++		}
++	}
++}
+diff --git a/MyGUIEngine/src/MyGUI_ResourceSkin.cpp b/MyGUIEngine/src/MyGUI_ResourceSkin.cpp
+index 29c06c2..83eeac3 100644
+--- a/MyGUIEngine/src/MyGUI_ResourceSkin.cpp
++++ b/MyGUIEngine/src/MyGUI_ResourceSkin.cpp
+@@ -101,6 +101,10 @@ namespace MyGUI
+ 				IntCoord offset;
+ 				Align align = Align::Default;
+ 				basis->findAttribute("type", basisSkinType);
++
++				if (basisSkinType == "BlurrySubSkin")
++					basisSkinType = "SubSkin";
++
+ 				if (basis->findAttribute("offset", tmp_str))
+ 					offset = IntCoord::parse(tmp_str);
+ 				if (basis->findAttribute("align", tmp_str))
+diff --git a/MyGUIEngine/src/MyGUI_ResourceTrueTypeFont.cpp b/MyGUIEngine/src/MyGUI_ResourceTrueTypeFont.cpp
+index ca8d3cd..1fe1870 100644
+--- a/MyGUIEngine/src/MyGUI_ResourceTrueTypeFont.cpp
++++ b/MyGUIEngine/src/MyGUI_ResourceTrueTypeFont.cpp
+@@ -586,6 +586,8 @@ namespace MyGUI
+ 				mCharMap.erase(iter++);
+ 		}
+ 
++		MyGuiAdditions::FontLoaderCache::setGlyphRanges(mResourceName, mCharMap);
++
+ 		// Do some special handling for the "Space" and "Tab" glyphs.
+ 		GlyphMap::iterator spaceGlyphIter = mGlyphMap.find(FontCodeType::Space);
+ 
+@@ -824,7 +826,13 @@ namespace MyGUI
+ 
+ 			// If no code points have been specified, use the Unicode Basic Multilingual Plane by default.
+ 			if (mCharMap.empty())
+-				addCodePointRange(0, 0xFFFF);
++			{
++				const auto* v_glyph_cache = MyGuiAdditions::FontLoaderCache::getGlyphRanges(mResourceName);
++				if (v_glyph_cache != nullptr)
++					mCharMap = *v_glyph_cache;
++				else
++					addCodePointRange(0, 0xFFFF);
++			}
+ 		}
+ 		else
+ 		{
+diff --git a/Tools/LayoutEditor/Application.cpp b/Tools/LayoutEditor/Application.cpp
+index a1089ca..a9d82df 100644
+--- a/Tools/LayoutEditor/Application.cpp
++++ b/Tools/LayoutEditor/Application.cpp
+@@ -26,6 +26,7 @@
+ #include "GridManager.h"
+ #include "FactoryManager.h"
+ #include "ComponentFactory.h"
++#include "FontLoaderCache.hpp"
+ 
+ namespace tools
+ {
+@@ -459,6 +460,8 @@ namespace tools
+ 
+ 	void Application::LoadGuiSettings()
+ 	{
++		MyGuiAdditions::FontLoaderCache::loadFromFile();
++
+ 		const SettingsManager::VectorString& resources =
+ 			SettingsManager::getInstance().getValueList("Resources/Resource.List");
+ 		for (const auto& resource : resources)
+@@ -473,6 +476,8 @@ namespace tools
+ 			SettingsManager::getInstance().getValueList("Resources/AdditionalResource.List");
+ 		for (const auto& additionalResource : additionalResources)
+ 			MyGUI::ResourceManager::getInstance().load(additionalResource);
++
++		MyGuiAdditions::FontLoaderCache::saveToFile();
+ 	}
+ 
+ 	void Application::CreateControls()

@@ -8,5 +8,9 @@ _: {
       name = "shell";
       inputsFrom = [self'.packages.configGen];
     };
+    devShells.mygui = pkgs.mkShell {
+      name = "mygui-shell";
+      inputsFrom = [self'.packages.mygui];
+    };
   };
 }

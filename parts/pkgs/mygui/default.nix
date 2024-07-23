@@ -21,6 +21,11 @@ in
       "-DMYGUI_RENDERSYSTEM=7"
       "-DMYGUI_INSTALL_TOOLS=TRUE"
     ];
+
+    patches = [
+      ./font-cache.patch
+    ];
+
     postInstall = ''
       mkdir -p "$out/share/MyGuiTools"
       cp -r "$src/Media" "$out/share/MyGuiTools/"
