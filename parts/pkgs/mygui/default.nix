@@ -23,9 +23,9 @@ in
     ];
 
     patches = [
-      ./patches/font_cache.patch
-      ./patches/blurry_subskin.patch
-      ./patches/xdg_config_for_settings.patch
+      ../../../patches/font_cache.patch
+      ../../../patches/blurry_subskin.patch
+      ../../../patches/xdg_config_for_settings.patch
     ];
 
     postInstall = ''

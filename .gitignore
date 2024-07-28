@@ -1,3 +1,5 @@
 .cache
 build
 result
+repo
+.flatpak-builder
