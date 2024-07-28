@@ -77,7 +77,7 @@
 					"dest-filename": "sm-gui-launcher",
 					"commands": [
 						"message=$(/app/bin/SMLayoutEditor-ConfigGen 2>&1)",
-						"zenity --error --text=\"$message\" --title=\"Failed to launch sm-gui-editor\"",
+						"if [ $message != \"\" ]; then zenity --error --text=\"$message\" --title=\"Failed to launch sm-gui-editor\"; fi",
 						"cd /app/share/MYGUI",
 						"LayoutEditor"
 					]
