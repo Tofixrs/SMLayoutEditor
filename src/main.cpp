@@ -2,14 +2,17 @@
 #include <cstddef>
 #include <cstdio>
 #include <cstdlib>
+#include <filesystem>
 #include <format>
 #include <fstream>
+#include <iostream>
+#include <stdexcept>
 #include <string>
 #include <tinyxml2.h>
 
 using namespace tinyxml2;
-std::string xdg =
-    getenv("XDG_CONFIG_HOME") + std::string("/MYGUI/le_user_settings.xml");
+std::string xdg_config = getenv("XDG_CONFIG_HOME") + std::string("/MYGUI");
+std::string xdg = xdg_config + std::string("/le_user_settings.xml");
 
 std::string paths[35] = {
     "Resolutions/1920x1080/SequenceController",
@@ -111,6 +114,10 @@ std::string getSMPath() {
   auto libraryPath = std::format("{}/Steam/steamapps/libraryfolders.vdf",
                                  getenv("XDG_DATA_HOME"));
   std::ifstream libraryFile(libraryPath);
+  if (!libraryFile) {
+    throw std::runtime_error(
+        "Couldn't find steam library please specify SM_PATH");
+  }
   auto library = tyti::vdf::read(libraryFile);
 
   std::string libContainingSm = "";
@@ -138,6 +145,7 @@ std::string getSMPath() {
 }
 
 int main() {
+  std::filesystem::create_directory(xdg_config);
   std::ifstream file(xdg);
   if (file)
     return 0;
