@@ -1,7 +1,19 @@
 name: "Push cachix"
 on:
   pull_request:
+		paths-ignore:
+			- 'flatpak/**'
+			- '.editorconfig'
+			- '.gitignore'
+			- 'README.md'
+			- "workflows/flatpak.yml"
   push:
+		paths-ignore:
+			- 'flatpak/**'
+			- '.editorconfig'
+			- '.gitignore'
+			- 'README.md'
+			- "workflows/flatpak.yml"
 jobs:
   tests:
     runs-on: ubuntu-latest
