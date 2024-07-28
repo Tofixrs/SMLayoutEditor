@@ -1,23 +1,7 @@
 on:
   push:
-		paths-ignore:
-			- 'parts/**'
-			- 'flake.nix'
-			- 'flake.lock'
-			- '.editorconfig'
-			- '.gitignore'
-			- 'README.md'
-			- "workflows/cachix.yml"
   pull_request:
-		paths-ignore:
-			- 'parts/**'
-			- 'flake.nix'
-			- 'flake.lock'
-			- '.editorconfig'
-			- '.gitignore'
-			- 'README.md'
-			- "workflows/cachix.yml"
-name: Build flatpak
+name: CI
 jobs:
   flatpak:
     name: "Flatpak"
