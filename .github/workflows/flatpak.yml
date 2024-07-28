@@ -1,6 +1,18 @@
 on:
   push:
+    paths-ignore:
+      - "parts/**"
+      - "README.md"
+      - "flake.nix"
+      - "flake.lock"
+      - ".editorconfig"
   pull_request:
+    paths-ignore:
+      - "parts/**"
+      - "README.md"
+      - "flake.nix"
+      - "flake.lock"
+      - ".editorconfig"
 name: CI
 jobs:
   flatpak:

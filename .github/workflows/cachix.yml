@@ -1,7 +1,11 @@
 name: "Push cachix"
 on:
   pull_request:
+    paths-ignore:
+      - "flatpak/**"
   push:
+    paths-ignore:
+      - "flatpak/**"
 jobs:
   tests:
     runs-on: ubuntu-latest
