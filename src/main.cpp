@@ -8,6 +8,8 @@
 #include <tinyxml2.h>
 
 using namespace tinyxml2;
+std::string xdg =
+    getenv("XDG_CONFIG_HOME") + std::string("/MYGUI/le_user_settings.xml");
 
 std::string paths[35] = {
     "Resolutions/1920x1080/SequenceController",
@@ -136,7 +138,7 @@ std::string getSMPath() {
 }
 
 int main() {
-  std::ifstream file("/tmp/sm-gui-editor/le_user_settings.xml");
+  std::ifstream file(xdg);
   if (file)
     return 0;
 
@@ -172,7 +174,7 @@ int main() {
   res->InsertFirstChild(customResList);
   res->InsertFirstChild(customPathsList);
 
-  settings.SaveFile("le_user_settings.xml");
+  settings.SaveFile(xdg.c_str());
 
   return 0;
 }

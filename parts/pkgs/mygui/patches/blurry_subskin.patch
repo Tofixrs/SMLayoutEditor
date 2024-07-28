@@ -1,0 +1,41 @@
+diff --git a/Common/MessageBox/MessageBox.h b/Common/MessageBox/MessageBox.h
+index 61ff805..15155f5 100644
+--- a/Common/MessageBox/MessageBox.h
++++ b/Common/MessageBox/MessageBox.h
+@@ -75,7 +75,7 @@ namespace MyGUI
+ 			}
+ 			// бит, номер кнопки + смещение до Button1
+ 			MessageBoxStyle info = MessageBoxStyle(
+-				MessageBoxStyle::Enum(MYGUI_FLAG(mVectorButton.size() + MessageBoxStyle::_indexUserButton1)));
++				MessageBoxStyle::Enum(MYGUI_FLAG(std::uint8_t(mVectorButton.size() + MessageBoxStyle::_indexUserButton1))));
+ 
+ 			// запоминаем кнопки для отмены и подтверждения
+ 			if (mVectorButton.empty())
+diff --git a/Common/MessageBox/MessageBoxStyle.h b/Common/MessageBox/MessageBoxStyle.h
+index 520d885..c7e287a 100644
+--- a/Common/MessageBox/MessageBoxStyle.h
++++ b/Common/MessageBox/MessageBoxStyle.h
+@@ -145,7 +145,7 @@ namespace MyGUI
+ 			{
+ 				if ((num & 1) == 1)
+ 				{
+-					buttons.emplace_back(MessageBoxStyle::Enum(MYGUI_FLAG(index)));
++					buttons.emplace_back(MessageBoxStyle::Enum(MYGUI_FLAG(std::uint8_t(index))));
+ 				}
+ 
+ 				++index;
+diff --git a/MyGUIEngine/src/MyGUI_ResourceSkin.cpp b/MyGUIEngine/src/MyGUI_ResourceSkin.cpp
+index 29c06c2..83eeac3 100644
+--- a/MyGUIEngine/src/MyGUI_ResourceSkin.cpp
++++ b/MyGUIEngine/src/MyGUI_ResourceSkin.cpp
+@@ -101,6 +101,10 @@ namespace MyGUI
+ 				IntCoord offset;
+ 				Align align = Align::Default;
+ 				basis->findAttribute("type", basisSkinType);
++
++				if (basisSkinType == "BlurrySubSkin")
++					basisSkinType = "SubSkin";
++
+ 				if (basis->findAttribute("offset", tmp_str))
+ 					offset = IntCoord::parse(tmp_str);
+ 				if (basis->findAttribute("align", tmp_str))

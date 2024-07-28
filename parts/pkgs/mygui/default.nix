@@ -23,12 +23,12 @@ in
     ];
 
     patches = [
-      ./font_cache.patch
+      ./patches/font_cache.patch
+      ./patches/blurry_subskin.patch
+      ./patches/xdg_config_for_settings.patch
     ];
 
     postInstall = ''
-      mkdir -p "$out/share/MyGuiTools"
-      cp -r "$src/Media" "$out/share/MyGuiTools/"
-      cp ${resources} $out/share/MyGuiTools/resources.xml
+      cp ${resources} $out/share/MYGUI/resources.xml
     '';
   }

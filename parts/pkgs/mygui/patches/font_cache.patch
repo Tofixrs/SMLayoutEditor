@@ -1,29 +1,3 @@
-diff --git a/Common/MessageBox/MessageBox.h b/Common/MessageBox/MessageBox.h
-index 61ff805..15155f5 100644
---- a/Common/MessageBox/MessageBox.h
-+++ b/Common/MessageBox/MessageBox.h
-@@ -75,7 +75,7 @@ namespace MyGUI
- 			}
- 			// бит, номер кнопки + смещение до Button1
- 			MessageBoxStyle info = MessageBoxStyle(
--				MessageBoxStyle::Enum(MYGUI_FLAG(mVectorButton.size() + MessageBoxStyle::_indexUserButton1)));
-+				MessageBoxStyle::Enum(MYGUI_FLAG(std::uint8_t(mVectorButton.size() + MessageBoxStyle::_indexUserButton1))));
- 
- 			// запоминаем кнопки для отмены и подтверждения
- 			if (mVectorButton.empty())
-diff --git a/Common/MessageBox/MessageBoxStyle.h b/Common/MessageBox/MessageBoxStyle.h
-index 520d885..c7e287a 100644
---- a/Common/MessageBox/MessageBoxStyle.h
-+++ b/Common/MessageBox/MessageBoxStyle.h
-@@ -145,7 +145,7 @@ namespace MyGUI
- 			{
- 				if ((num & 1) == 1)
- 				{
--					buttons.emplace_back(MessageBoxStyle::Enum(MYGUI_FLAG(index)));
-+					buttons.emplace_back(MessageBoxStyle::Enum(MYGUI_FLAG(std::uint8_t(index))));
- 				}
- 
- 				++index;
 diff --git a/MyGUIEngine/MyGUIEngine.list b/MyGUIEngine/MyGUIEngine.list
 index 35a7b08..9aaee8a 100644
 --- a/MyGUIEngine/MyGUIEngine.list
@@ -46,10 +20,10 @@ index 35a7b08..9aaee8a 100644
    include/MyGUI.h
 diff --git a/MyGUIEngine/include/FontLoaderCache.hpp b/MyGUIEngine/include/FontLoaderCache.hpp
 new file mode 100644
-index 0000000..65e9699
+index 0000000..e4a90ee
 --- /dev/null
 +++ b/MyGUIEngine/include/FontLoaderCache.hpp
-@@ -0,0 +1,21 @@
+@@ -0,0 +1,20 @@
 +#pragma once
 +
 +#include <fstream>
@@ -66,12 +40,10 @@ index 0000000..65e9699
 +	public:
 +		static const std::map<unsigned int, unsigned int>* getGlyphRanges(const std::string& font_name);
 +		static void setGlyphRanges(const std::string& font_name, const std::map<unsigned int, unsigned int>& glyph_map);
-+		
 +		static void saveToFile();
 +		static void loadFromFile();
 +	};
 +}
-\ No newline at end of file
 diff --git a/MyGUIEngine/include/MyGUI_Precompiled.h b/MyGUIEngine/include/MyGUI_Precompiled.h
 index 2797679..615f7ca 100644
 --- a/MyGUIEngine/include/MyGUI_Precompiled.h
@@ -85,21 +57,18 @@ index 2797679..615f7ca 100644
  #endif // MYGUI_PRECOMPILED_H_
 diff --git a/MyGUIEngine/src/FontLoaderCache.cpp b/MyGUIEngine/src/FontLoaderCache.cpp
 new file mode 100644
-index 0000000..0be6655
+index 0000000..56f3914
 --- /dev/null
 +++ b/MyGUIEngine/src/FontLoaderCache.cpp
-@@ -0,0 +1,190 @@
-+//#include "C:/dev/mg/mygui/build/MyGUIEngine/CMakeFiles/MyGUIEngine.dir/Release/cmake_pch.hxx"
-+//#include "C:/dev/mg/mygui/build/MyGUIEngine/CMakeFiles/MyGUIEngine.dir/Debug/cmake_pch.hxx"
-+
+@@ -0,0 +1,192 @@
 +#include <cstdlib>
 +#include <filesystem>
 +#include <fstream>
++#include <iostream>
 +#include <vector>
 +
 +#include <unordered_map>
 +#include <map>
-+
 +
 +namespace MyGuiAdditions
 +{
@@ -207,7 +176,12 @@ index 0000000..0be6655
 +
 +	inline static std::string getGlobalLocation()
 +	{
-+		std::string path = getenv("XDG_CACHE_HOME");
++		std::string path = getenv("XDG_CACHE_HOME") + std::string("/MYGUI");
++        try {
++			std::filesystem::create_directory(path);
++        } catch (...) {
++			std::cout << "";
++        }
 +
 +		return path + "/font_loader_cache";
 +	}
@@ -215,7 +189,7 @@ index 0000000..0be6655
 +	void FontLoaderCache::saveToFile()
 +	{
 +		FileWriter v_writer;
-+		
++
 +		v_writer.write(std::uint16_t(g_fontGlyphMap.size()));
 +
 +		for (const auto& v_cur_range : g_fontGlyphMap)
@@ -279,21 +253,6 @@ index 0000000..0be6655
 +		}
 +	}
 +}
-diff --git a/MyGUIEngine/src/MyGUI_ResourceSkin.cpp b/MyGUIEngine/src/MyGUI_ResourceSkin.cpp
-index 29c06c2..83eeac3 100644
---- a/MyGUIEngine/src/MyGUI_ResourceSkin.cpp
-+++ b/MyGUIEngine/src/MyGUI_ResourceSkin.cpp
-@@ -101,6 +101,10 @@ namespace MyGUI
- 				IntCoord offset;
- 				Align align = Align::Default;
- 				basis->findAttribute("type", basisSkinType);
-+
-+				if (basisSkinType == "BlurrySubSkin")
-+					basisSkinType = "SubSkin";
-+
- 				if (basis->findAttribute("offset", tmp_str))
- 					offset = IntCoord::parse(tmp_str);
- 				if (basis->findAttribute("align", tmp_str))
 diff --git a/MyGUIEngine/src/MyGUI_ResourceTrueTypeFont.cpp b/MyGUIEngine/src/MyGUI_ResourceTrueTypeFont.cpp
 index ca8d3cd..1fe1870 100644
 --- a/MyGUIEngine/src/MyGUI_ResourceTrueTypeFont.cpp

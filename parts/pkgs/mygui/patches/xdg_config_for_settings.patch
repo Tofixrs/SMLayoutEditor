@@ -1,0 +1,30 @@
+diff --git a/Tools/EditorFramework/SettingsManager.cpp b/Tools/EditorFramework/SettingsManager.cpp
+index 0332ab6..921d915 100644
+--- a/Tools/EditorFramework/SettingsManager.cpp
++++ b/Tools/EditorFramework/SettingsManager.cpp
+@@ -5,8 +5,11 @@
+ */
+ 
+ #include "Precompiled.h"
++#include <filesystem>
+ #include "SettingsManager.h"
+ 
++std::string xdg_config = getenv("XDG_CONFIG_HOME") + std::string("/MYGUI/");
++
+ namespace tools
+ {
+ 	MYGUI_SINGLETON_DEFINITION(SettingsManager);
+@@ -191,7 +194,12 @@ namespace tools
+ 
+ 	bool SettingsManager::loadUserSettingsFile(std::string_view _fileName)
+ 	{
+-		mUserSettingsFileName = _fileName;
++		try {
++				std::filesystem::create_directory(xdg_config);
++		} catch (...) {
++				std::cout << "";
++		}
++		mUserSettingsFileName = xdg_config + std::string(_fileName);
+ 
+ 		pugi::xml_document doc;
+ 		pugi::xml_parse_result result = doc.load_file(mUserSettingsFileName.data());
