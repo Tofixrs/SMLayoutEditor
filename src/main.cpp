@@ -182,6 +182,12 @@ int main() {
   res->InsertFirstChild(customResList);
   res->InsertFirstChild(customPathsList);
 
+  XMLElement *settingsInside = settings.NewElement("Settings");
+  XMLElement *workspaceSize = settings.NewElement("WorkspaceTextureSize");
+  workspaceSize->SetValue("1920 1080");
+  settingsInside->InsertEndChild(workspaceSize);
+  pRoot->InsertEndChild(settingsInside);
+
   settings.SaveFile(xdg.c_str());
 
   return 0;
