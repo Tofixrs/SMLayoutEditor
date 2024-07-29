@@ -69,7 +69,11 @@
 			"build-commands": [
 				"install -Dm755 sm-gui-launcher /app/bin/sm-gui-launcher",
 				"mkdir -p /app/share/MYGUI",
-				"cp resources.xml /app/share/MYGUI"
+				"cp resources.xml /app/share/MYGUI",
+				"mkdir -p /app/share/metainfo/",
+				"cp metainfo.xml /app/share/metainfo/io.github.Tofixrs.sm_layout_editor.metainfo.xml",
+				"mkdir -p /app/share/applications/",
+				"cp desktop.desktop /app/share/applications/io.github.Tofixrs.sm_layout_editor.desktop"
 			],
 			"sources": [
 				{
@@ -85,6 +89,14 @@
 				{
 					"type": "file",
 					"path": "resources.xml"
+				},
+				{
+					"type": "file",
+					"path": "metainfo.xml"
+				},
+				{
+					"type": "file",
+					"path": "dekstop.desktop"
 				}
 			]
 		}

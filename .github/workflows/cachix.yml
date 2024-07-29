@@ -3,9 +3,15 @@ on:
   pull_request:
     paths-ignore:
       - "flatpak/**"
+      - "README.md"
+      - ".editorconfig"
+      - "LICENSE"
   push:
     paths-ignore:
       - "flatpak/**"
+      - "README.md"
+      - ".editorconfig"
+      - "LICENSE"
 jobs:
   tests:
     runs-on: ubuntu-latest

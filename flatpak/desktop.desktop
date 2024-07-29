@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=0.6.0
+Type=Application
+
+Name=Scrap Mechanic Layout Editor
+Comment=Lets you edit layouts for scrap mechanic
+Categories=Development;GUIDesigner;
+
+Icon=sm_layout_editor
+Exec=sm-gui-launcher
+Terminal=false

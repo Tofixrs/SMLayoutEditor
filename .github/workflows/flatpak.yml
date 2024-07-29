@@ -6,6 +6,7 @@ on:
       - "flake.nix"
       - "flake.lock"
       - ".editorconfig"
+      - "LICENSE"
   pull_request:
     paths-ignore:
       - "parts/**"
@@ -13,6 +14,7 @@ on:
       - "flake.nix"
       - "flake.lock"
       - ".editorconfig"
+      - "LICENSE"
 name: CI
 jobs:
   flatpak:
