@@ -4,8 +4,8 @@
   
   <name>Scrap Mechanic Layout Editor</name>
   <summary>Lets you edit layouts for scrap mechanic</summary>
-	<icon type="stock">io.github.Tofixrs.sm_layout_editor</icon>
-	<url type="homepage">https://github.com/Tofixrs/SMLayoutEditor</url>
+	<icon type="stock">io.github.tofixrs.sm_layout_editor</icon>
+	<url type="homepage">https://github.com/Tofixrs/sm_layout_editor</url>
   
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
@@ -20,7 +20,7 @@
 		<category>GUIDesigner</category>
 	</categories>
   
-  <launchable type="desktop-id">io.github.Tofixrs.sm_layout_editor.desktop</launchable>
+  <launchable type="desktop-id">io.github.tofixrs.sm_layout_editor.desktop</launchable>
 	<developer id="io.github.tofixrs.sm_layout_editor">
 		<name>Tofixrs</name>
 	</developer>

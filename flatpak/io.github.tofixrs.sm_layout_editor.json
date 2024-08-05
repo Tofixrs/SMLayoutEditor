@@ -1,5 +1,5 @@
 {
-	"app-id": "io.github.Tofixrs.sm_layout_editor",
+	"app-id": "io.github.tofixrs.sm_layout_editor",
 	"runtime": "org.freedesktop.Platform",
 	"runtime-version": "23.08",
 	"sdk": "org.freedesktop.Sdk",
@@ -70,9 +70,9 @@
 			"buildsystem": "simple",
 			"build-commands": [
 				"install -Dm755 sm-gui-launcher /app/bin/sm-gui-launcher",
-				"install -Dm644 io.github.tofixrs.sm_layout_editor.desktop /app/share/applications/io.github.Tofixrs.sm_layout_editor.desktop",
+				"install -Dm644 io.github.tofixrs.sm_layout_editor.desktop /app/share/applications/io.github.tofixrs.sm_layout_editor.desktop",
 				"install -Dm644 io.github.tofixrs.sm_layout_editor.metainfo.xml /app/share/metainfo/io.github.Tofixrs.sm_layout_editor.metainfo.xml",
-				"install -Dm644 icon-generic.svg /app/share/icons/hicolor/scalable/apps/io.github.Tofixrs.sm_layout_editor.svg",
+				"install -Dm644 icon-generic.svg /app/share/icons/hicolor/scalable/apps/io.github.tofixrs.sm_layout_editor.svg",
 				"install -Dm644 resources.xml /app/share/MYGUI/resources.xml"
 			],
 			"sources": [

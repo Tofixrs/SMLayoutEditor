@@ -6,6 +6,6 @@ Name=Scrap Mechanic Layout Editor
 Comment=Lets you edit layouts for scrap mechanic
 Categories=Development;GUIDesigner;
 
-Icon=io.github.Tofixrs.sm_layout_editor
+Icon=io.github.tofixrs.sm_layout_editor
 Exec=sm-gui-launcher
 Terminal=false
