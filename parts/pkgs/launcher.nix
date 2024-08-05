@@ -12,7 +12,7 @@ self': {
 in
   stdenvNoCC.mkDerivation {
     pname = "SM-GuiEditor";
-    version = "1.0.0";
+    version = "1.0.1";
     phases = ["installPhase"];
     installPhase = ''
       mkdir -p "$out/bin"

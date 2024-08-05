@@ -184,7 +184,7 @@ int main() {
 
   XMLElement *settingsInside = settings.NewElement("Settings");
   XMLElement *workspaceSize = settings.NewElement("WorkspaceTextureSize");
-  workspaceSize->SetValue("1920 1080");
+  workspaceSize->SetText("1920 1080");
   settingsInside->InsertEndChild(workspaceSize);
   pRoot->InsertEndChild(settingsInside);
 
