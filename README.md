@@ -15,6 +15,9 @@ MyGui layout editor for Scrap Mechanic packaged for the nix package manager
 
 ## Flatpak
 
+0. Installing flatpak
+   Refer to [this](https://flatpak.org/setup/)
+
 1. Getting the flatpak
 
 There are two sorces of the flatpak as of now (with flathub possibly being added as a 3rd option in the future):
