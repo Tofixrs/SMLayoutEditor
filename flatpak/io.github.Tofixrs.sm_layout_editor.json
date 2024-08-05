@@ -4,11 +4,13 @@
 	"runtime-version": "23.08",
 	"sdk": "org.freedesktop.Sdk",
 	"command": "sm-gui-launcher",
+	"cleanup": ["/include"],
 	"finish-args": [
-		"--socket=x11",
+		"--socket=fallback-x11",
 		"--socket=wayland",
 		"--device=dri",
-		"--filesystem=home"
+		"--filesystem=home",
+		"--share=ipc"
 	],
 	"modules": [
 		"shared-modules/glu/glu-9.json",
@@ -25,7 +27,7 @@
 		},
 		{
 			"name": "sm-gui-configGen",
-			"buildsystem": "cmake",
+			"buildsystem": "cmake-ninja",
 			"sources": [
 				{
 					"type": "dir",
@@ -35,7 +37,7 @@
 		},
 		{
 			"name": "mygui",
-			"buildsystem": "cmake",
+			"buildsystem": "cmake-ninja",
 			"sources": [
 				{
 					"type": "git",
@@ -68,12 +70,10 @@
 			"buildsystem": "simple",
 			"build-commands": [
 				"install -Dm755 sm-gui-launcher /app/bin/sm-gui-launcher",
-				"mkdir -p /app/share/MYGUI",
-				"cp resources.xml /app/share/MYGUI",
-				"mkdir -p /app/share/metainfo/",
-				"cp metainfo.xml /app/share/metainfo/io.github.Tofixrs.sm_layout_editor.metainfo.xml",
-				"mkdir -p /app/share/applications/",
-				"cp desktop.desktop /app/share/applications/io.github.Tofixrs.sm_layout_editor.desktop"
+				"install -Dm644 io.github.tofixrs.sm_layout_editor.desktop /app/share/applications/io.github.Tofixrs.sm_layout_editor.desktop",
+				"install -Dm644 io.github.tofixrs.sm_layout_editor.metainfo.xml /app/share/metainfo/io.github.Tofixrs.sm_layout_editor.metainfo.xml",
+				"install -Dm644 icon-generic.svg /app/share/icons/hicolor/scalable/apps/io.github.Tofixrs.sm_layout_editor.svg",
+				"install -Dm644 resources.xml /app/share/MYGUI/resources.xml"
 			],
 			"sources": [
 				{
@@ -92,11 +92,15 @@
 				},
 				{
 					"type": "file",
-					"path": "metainfo.xml"
+					"path": "io.github.tofixrs.sm_layout_editor.metainfo.xml"
 				},
 				{
 					"type": "file",
-					"path": "desktop.desktop"
+					"path": "io.github.tofixrs.sm_layout_editor.desktop"
+				},
+				{
+					"type": "file",
+					"path": "icon-generic.svg"
 				}
 			]
 		}
